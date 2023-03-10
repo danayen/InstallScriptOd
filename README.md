@@ -1,18 +1,23 @@
 # [Odoo](https://www.odoo.com "Odoo's Homepage") Install Script
 
-This script is based on the install script from André Schenkels (https://github.com/aschenkels-ictstudio/openerp-install-scripts)
-but goes a bit further and has been improved. This script will also give you the ability to define an xmlrpc_port in the .conf file that is generated under /etc/
-This script can be safely used in a multi-odoo code base server because the default Odoo port is changed BEFORE the Odoo is started.
-
-## Installing Nginx
-If you set the parameter ```INSTALL_NGINX``` to ```True``` you should also configure workers. Without workers you will probably get connection loss issues. Look at [the deployment guide from Odoo](https://www.odoo.com/documentation/16.0/administration/install/deploy.html) on how to configure workers.
-
 ## Installation procedure
 
 ##### 1. Download the script:
 ```
 sudo wget https://raw.githubusercontent.com/danayen/InstallScriptOd/16.0/odoo_install.sh
 ```
+##### 2. Modify the parameters as you wish.
+Only a few setup (detales afte step 4).
+
+#### 3. Make the script executable
+```
+sudo chmod +x odoo_install.sh
+```
+##### 4. Execute the script:
+```
+sudo ./odoo_install.sh
+```
+
 ##### 2. Modify the parameters as you wish.
 There are a few things you can configure, this is the most used list:<br/>
 ```OE_USER``` will be the username for the system user.<br/>
@@ -29,14 +34,16 @@ There are a few things you can configure, this is the most used list:<br/>
 ```INSTALL_NGINX``` and ```ENABLE_SSL``` must be set to ```True``` and the placeholder in ```ADMIN_EMAIL``` must be replaced with a valid email address for certbot installation<br/>
   _By enabling SSL though Let's Encrypt you agree to the following [policies](https://www.eff.org/code/privacy/policy)_ <br/>
 
-#### 3. Make the script executable
-```
-sudo chmod +x odoo_install.sh
-```
-##### 4. Execute the script:
-```
-sudo ./odoo_install.sh
-```
+
+
+This script is based on the install script from André Schenkels (https://github.com/aschenkels-ictstudio/openerp-install-scripts)
+but goes a bit further and has been improved. This script will also give you the ability to define an xmlrpc_port in the .conf file that is generated under /etc/
+This script can be safely used in a multi-odoo code base server because the default Odoo port is changed BEFORE the Odoo is started.
+
+## Installing Nginx
+If you set the parameter ```INSTALL_NGINX``` to ```True``` you should also configure workers. Without workers you will probably get connection loss issues. Look at [the deployment guide from Odoo](https://www.odoo.com/documentation/16.0/administration/install/deploy.html) on how to configure workers.
+
+
 
 ## Where should I host Odoo?
 There are plenty of great services that offer good hosting. The script has been tested with a few major players such as [Google Cloud](https://cloud.google.com/), [Hetzner](https://www.hetzner.com/), [Amazon AWS](https://aws.amazon.com/) and [DigitalOcean](https://www.digitalocean.com/products/droplets/).
