@@ -178,6 +178,10 @@ fi
 sudo su root -c "printf 'admin_passwd = ${OE_SUPERADMIN}\n' >> /etc/${OE_CONFIG}.conf"
 if [ $OE_VERSION > "11.0" ];then
     sudo su root -c "printf 'http_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf 'xmlrpcs = True\n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf 'xmlrpcs_interface = 127.0.0.1 \n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf 'xmlrpcs_port = 8071\n' >> /etc/${OE_CONFIG}.conf"
+    sudo su root -c "printf 'longpolling_port = 8072\n' >> /etc/${OE_CONFIG}.conf"
 else
     sudo su root -c "printf 'xmlrpc_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
 fi
