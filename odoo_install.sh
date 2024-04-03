@@ -22,13 +22,15 @@ OE_HOME_EXT="/$OE_USER/${OE_USER}-server"
 INSTALL_WKHTMLTOPDF="True"
 # Set the default Odoo port (you still have to use -c /etc/odoo-server.conf for example to use this.)
 OE_PORT="8069"
+# Set the default Odoo longpolling port (you still have to use -c /etc/odoo-server.conf for example to use this.)
+LONGPOLLING_PORT="8072"
 # Choose the Odoo version which you want to install. For example: 16.0, 15.0, 14.0 or saas-22. When using 'master' the master version will be installed.
 # IMPORTANT! This script contains extra libraries that are specifically needed for Odoo 17.0
 OE_VERSION="17.0"
 # Set this to True if you want to install the Odoo enterprise version!
 IS_ENTERPRISE="False"
-# Installs postgreSQL V14 instead of defaults (e.g V12 for Ubuntu 20/22) - this improves performance
-INSTALL_POSTGRESQL_FOURTEEN="True"
+# Installs postgreSQL V16 instead of defaults (e.g V14 for Ubuntu 20/22) - this improves performance
+INSTALL_POSTGRESQL_SIXTEEN="True"
 # Set this to True if you want to install Nginx!
 INSTALL_NGINX="False"
 # Set the superadmin password - if GENERATE_RANDOM_PASSWORD is set to "True" we will automatically generate a random password, otherwise we use this one
@@ -38,8 +40,6 @@ GENERATE_RANDOM_PASSWORD="True"
 OE_CONFIG="${OE_USER}-server"
 # Set the website name
 WEBSITE_NAME="_"
-# Set the default Odoo longpolling port (you still have to use -c /etc/odoo-server.conf for example to use this.)
-LONGPOLLING_PORT="8072"
 # Set to "True" to install certbot and have ssl enabled, "False" to use http
 ENABLE_SSL="True"
 # Provide Email to register ssl certificate
@@ -53,7 +53,8 @@ ADMIN_EMAIL="odoo@example.com"
 
 # Check if the operating system is Ubuntu 22.04
 if [[ $(lsb_release -r -s) == "22.04" ]]; then
-    WKHTMLTOX_X64="https://packages.ubuntu.com/jammy/wkhtmltopdf"
+    #WKHTMLTOX_X64="https://packages.ubuntu.com/jammy/wkhtmltopdf"
+    WKHTMLTOX_X64="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.$(lsb_release -c -s)_amd64.deb"
     WKHTMLTOX_X32="https://packages.ubuntu.com/jammy/wkhtmltopdf"
     #No Same link works for both 64 and 32-bit on Ubuntu 22.04
 else
@@ -123,7 +124,11 @@ if [ $INSTALL_WKHTMLTOPDF = "True" ]; then
 
   if [[ $(lsb_release -r -s) == "22.04" ]]; then
     # Ubuntu 22.04 LTS
-    sudo apt install wkhtmltopdf -y
+    #sudo apt install wkhtmltopdf -y
+    sudo wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+    sudo apt install /root/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+    #only 12.6.1-3 work correctly on ubuntu 22.04. I test on jammy
+    # When "apt install wkhtmltopdf", it install 12.6.1 but not work correctly. QT problem.
   else
       # For older versions of Ubuntu
     sudo gdebi --n `basename $_url`
